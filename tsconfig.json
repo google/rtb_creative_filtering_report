@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "lib": [
+            "esnext"
+        ],
+        "types": [
+            "google-apps-script"
+        ],
+        "strict": true,
+        "experimentalDecorators": true,
+        "target": "ES2019",
+    }
+}
