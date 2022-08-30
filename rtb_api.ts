@@ -49,7 +49,12 @@ namespace RTBApi {
             let currentCreatives = creativeIds.splice(0, 40);
             let filter = encodeURIComponent(`creativeId=(${currentCreatives.join(" OR ")})`);
             let response = UrlFetchApp.fetch(`https://realtimebidding.googleapis.com/v1/buyers/${bidderId}/creatives?filter=${filter}&pageSize=${currentCreatives.length}`, defaultOptions);
-            creatives = creatives.concat(JSON.parse(response.getContentText()).creatives);
+            if (response.getResponseCode() != 200) {
+                TrixLogger.log(`Error during last operation!`);
+                TrixLogger.log(response.getContentText());
+            } else {
+                creatives = creatives.concat(JSON.parse(response.getContentText()).creatives);
+            }
         }
         return creatives;
     };
