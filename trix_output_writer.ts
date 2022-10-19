@@ -17,10 +17,11 @@ namespace TrixOutputWriter {
     export function writeCreatives(creatives: Array<any>) {
         let rangeValues = [["Creative Id", "Creative Format", "Categories", "Status Code", "Status Description", "Value", "Total Account Errors", "Ratio"]];
         for (let creative of creatives) {
+            let categories = creative.categories ? creative.categories.join(",\n") : "";
             rangeValues.push([
                 creative.creativeId,
                 creative.creativeFormat,
-                creative.categories.join(",\n"),
+                categories,
                 creative.statusCode,
                 creative.statusDescription,
                 creative.value,

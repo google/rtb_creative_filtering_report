@@ -248,6 +248,9 @@ namespace CreativeStatusCodes {
         229: "Ad rejected because billable event rate adjustment computed from bid and payment doesn't match adjustment sent in bid request.",
         230: "A provided ad load notification URL exceeded the maximum length.",
         231: "Ad rejected because the vast lacks an MP4A media file and the request requires an ad with an MP4A media file.",
-        232: "Ad rejected because the device screen orientation is landscape (width > height) but no single media asset of the returned video ad is in landscape."
+        232: "Ad rejected because the device screen orientation is landscape (width > height) but no single media asset of the returned video ad is in landscape.",
+        233: "Ad rejected because the publisher blocked non-instream video in protections.",
+        234: "Ad rejected because the publisher blocked display ads in protections.",
+        235: "Ad filtered because the currency specified in the bid response is invalid."
     }
 }

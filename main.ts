@@ -94,7 +94,7 @@ function loadData() {
             })
         }).sort((a: { [key: string]: any }, b: { [key: string]: any }) => b.value - a.value);
 
-        let creativeDetails = RTBApi.fetchCreativeDetails(bidderId, creatives.map((c: { [key: string]: any }) => c.creativeId));
+        let creativeDetails = RTBApi.fetchCreativeDetails(bidderId, creatives.filter((c: { [key: string]: any }) => c.creativeId && c.creativeId != "").map((c: { [key: string]: any }) => c.creativeId));
         const creativeDetailsMap: { [key: string]: any } = {};
         creativeDetails.forEach((cd) => {
             let categories: Array<number> = [];
@@ -152,8 +152,12 @@ function scheduleRecurring() {
 
 
 function buildTemplate() {
-    let spreasheet: GoogleAppsScript.Spreadsheet.Spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
-    Template.apply(spreasheet);
+    const spreadsheet: GoogleAppsScript.Spreadsheet.Spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+    const ui = SpreadsheetApp.getUi();
+    const response = ui.alert('This will clear all data and formatting on the spreadsheet, continue?', ui.ButtonSet.YES_NO);
+    if (response == ui.Button.YES) {
+        Template.apply(spreadsheet);
+    }
 }
 
 function onOpen() {
