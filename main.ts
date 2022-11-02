@@ -14,9 +14,9 @@
 */
 
 function mailData() {
-    TrixLogger.log("**********************************");
-    TrixLogger.log("***** Weekly Creative Report *****");
-    TrixLogger.log("**********************************");
+    TrixLogger.log("*************************************");
+    TrixLogger.log("***** Creative Filtering Report *****");
+    TrixLogger.log("*************************************");
     const emailTo = SpreadsheetApp.getActiveSpreadsheet().getRangeByName(Config.configurations.emailDestination.range)!.getValue();
     const emailSubject = SpreadsheetApp.getActiveSpreadsheet().getRangeByName(Config.configurations.emailTitle.range)!.getValue();
     TrixLogger.log(`Sending email ${emailSubject} to ${emailTo}`);
@@ -28,9 +28,9 @@ function mailData() {
 
 function loadData() {
     clearResults();
-    TrixLogger.log("**********************************");
-    TrixLogger.log("***** Weekly Creative Report *****");
-    TrixLogger.log("**********************************");
+    TrixLogger.log("*************************************");
+    TrixLogger.log("***** Creative Filtering Report *****");
+    TrixLogger.log("*************************************");
     const bidderId = SpreadsheetApp.getActiveSpreadsheet().getRangeByName(Config.configurations.parentId.range)!.getValue();
     const accountId = SpreadsheetApp.getActiveSpreadsheet().getRangeByName(Config.configurations.childId.range)!.getValue();
     const topNCreatives = SpreadsheetApp.getActiveSpreadsheet().getRangeByName(Config.configurations.topCreative.range)!.getValue();
