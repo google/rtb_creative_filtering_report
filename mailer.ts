@@ -32,5 +32,6 @@ namespace Mailer {
                 Utilities.newBlob(statusCodeCsv, "text/csv", "report_by_status.csv")
             ]
         });
+        UsageTracker.registerEvent('sendMail', 'ok');
     };
 };

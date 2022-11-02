@@ -1,14 +1,15 @@
 {
-    "timeZone": "America/New_York",
-    "dependencies": {},
-    "exceptionLogging": "STACKDRIVER",
-    "oauthScopes": [
-      "https://www.googleapis.com/auth/spreadsheets",
-      "https://www.googleapis.com/auth/adexchange.buyer",
-      "https://www.googleapis.com/auth/realtime-bidding",
-      "https://www.googleapis.com/auth/script.external_request",
-      "https://www.googleapis.com/auth/script.send_mail",
-      "https://www.googleapis.com/auth/script.scriptapp"
-    ],
-    "runtimeVersion": "V8"
-  }
+  "timeZone": "America/New_York",
+  "dependencies": {},
+  "exceptionLogging": "STACKDRIVER",
+  "oauthScopes": [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/adexchange.buyer",
+    "https://www.googleapis.com/auth/realtime-bidding",
+    "https://www.googleapis.com/auth/script.external_request",
+    "https://www.googleapis.com/auth/script.send_mail",
+    "https://www.googleapis.com/auth/script.scriptapp",
+    "https://www.googleapis.com/auth/userinfo.email"
+  ],
+  "runtimeVersion": "V8"
+}

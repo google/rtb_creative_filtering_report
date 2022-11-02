@@ -29,6 +29,7 @@ namespace TrixOutputWriter {
                 creative.ratio]);
         }
         TrixLogger.log(`Writting ${rangeValues.length} rows to Results by Creative tab...`);
+        UsageTracker.registerEvent('loadMetrics', 'ok', { totalRows: rangeValues.length });
         TrixBatcher.writeFully(Config.resultsSheets.byCreative.range, rangeValues);
     };
 
