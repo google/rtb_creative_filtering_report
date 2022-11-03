@@ -47,7 +47,7 @@ namespace RTBApi {
         let creatives: Array<any> = [];
         while (creativeIds.length > 0) {
             let currentCreatives = creativeIds.splice(0, 40);
-            let filter = encodeURIComponent(`creativeId=(${currentCreatives.join(" OR ")})`);
+            let filter = encodeURIComponent(`creativeId=("${currentCreatives.join('" OR "')}")`);
             let response = UrlFetchApp.fetch(`https://realtimebidding.googleapis.com/v1/buyers/${bidderId}/creatives?filter=${filter}&pageSize=${currentCreatives.length}`, defaultOptions);
             if (response.getResponseCode() != 200) {
                 TrixLogger.log(`Error during last operation!`);
