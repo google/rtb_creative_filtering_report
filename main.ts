@@ -26,13 +26,17 @@ function mailData() {
     TrixLogger.log("**********************************");
 }
 
-function loadData() {
+function loadNow() {
+    const bidderId = SpreadsheetApp.getActiveSpreadsheet().getRangeByName(Config.configurations.parentId.range)!.getValue();
+    const accountId = SpreadsheetApp.getActiveSpreadsheet().getRangeByName(Config.configurations.childId.range)!.getValue();
+    loadData(bidderId, accountId);
+}
+
+function loadData(bidderId: string, accountId: string) {
     clearResults();
     TrixLogger.log("*************************************");
     TrixLogger.log("***** Creative Filtering Report *****");
     TrixLogger.log("*************************************");
-    const bidderId = SpreadsheetApp.getActiveSpreadsheet().getRangeByName(Config.configurations.parentId.range)!.getValue();
-    const accountId = SpreadsheetApp.getActiveSpreadsheet().getRangeByName(Config.configurations.childId.range)!.getValue();
     const topNCreatives = SpreadsheetApp.getActiveSpreadsheet().getRangeByName(Config.configurations.topCreative.range)!.getValue();
     const creativeStatusCodes = CreativeStatusCodes.mapping;
     const categoriesMap = Categories.mapping;
@@ -125,7 +129,9 @@ function loadData() {
 }
 
 function loadAndMail() {
-    loadData();
+    const bidderId = PropertiesService.getDocumentProperties().getProperty("bidderId")!;
+    const accountId = PropertiesService.getDocumentProperties().getProperty("accountId")!;
+    loadData(bidderId, accountId);
     mailData();
 }
 
@@ -142,12 +148,20 @@ function removeTriggers() {
 }
 
 function scheduleRecurring() {
+    const ui = SpreadsheetApp.getUi();
+    const bidderId = SpreadsheetApp.getActiveSpreadsheet().getRangeByName(Config.configurations.parentId.range)!.getValue();
+    const accountId = SpreadsheetApp.getActiveSpreadsheet().getRangeByName(Config.configurations.childId.range)!.getValue();
+    PropertiesService.getDocumentProperties().setProperty("bidderId", bidderId);
+    PropertiesService.getDocumentProperties().setProperty("accountId", accountId);
     removeTriggers();
     const durationDays = SpreadsheetApp.getActiveSpreadsheet().getRangeByName(Config.configurations.cadence.range)!.getValue();
-    ScriptApp.newTrigger('loadAndMail')
-        .timeBased()
-        .everyDays(durationDays)
-        .create();
+    const response = ui.alert(`Scheduling email every ${durationDays} days for account ${bidderId}, is this correct?`, ui.ButtonSet.YES_NO);
+    if (response == ui.Button.YES) {
+        ScriptApp.newTrigger('loadAndMail')
+            .timeBased()
+            .everyDays(durationDays)
+            .create();
+    }
 }
 
 
@@ -165,7 +179,7 @@ function onOpen() {
     ui.createMenu('Creative Filtering Report')
         .addItem('Build template', 'buildTemplate')
         .addItem('Clear results', 'clearResults')
-        .addItem('Load creative metrics', 'loadData')
+        .addItem('Load creative metrics', 'loadNow')
         .addItem('Send results by mail', 'mailData')
         .addItem('Schedule recurring report', 'scheduleRecurring')
         .addItem('Remove schedule', 'removeTriggers')
