@@ -30,7 +30,6 @@ namespace UsageTracker {
         const userDomain = Session.getEffectiveUser().getEmail().split('@')[1];
         const spreadsheetId = SpreadsheetApp.getActiveSpreadsheet().getId();
         const customData = {
-            userDomain,
             spreadsheetId,
             ...additionalInfo
         };
@@ -40,6 +39,7 @@ namespace UsageTracker {
                 'solution': 'creative_filtering_report',
                 'event_name': event,
                 'event_status': status,
+                'client': userDomain,
                 'custom_event_data': convertObjectToTrackingEventCustomData(customData),
             })
         };

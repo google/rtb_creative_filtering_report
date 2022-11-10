@@ -15,7 +15,7 @@
 
 namespace TrixOutputWriter {
     export function writeCreatives(creatives: Array<any>) {
-        let rangeValues = [["Creative Id", "Creative Format", "Categories", "Status Code", "Status Description", "Value", "Total Account Errors", "Ratio"]];
+        let rangeValues = [["Creative Id", "Creative Format", "Categories", "Status Code", "Status Description", "# filtered", "Total Account # filtered", "Ratio"]];
         for (let creative of creatives) {
             let categories = creative.categories ? creative.categories.join(",\n") : "";
             rangeValues.push([
@@ -34,7 +34,7 @@ namespace TrixOutputWriter {
     };
 
     export function writeStatusCodes(statusCodes: Array<any>) {
-        let rangeValues = [["Status Code", "Status Description", "Top Creatives", "Status Errors", "Total Account Errors", "Ratio"]];
+        let rangeValues = [["Status Code", "Status Description", "Top Creatives", "# filtered", "Total Account # filtered", "Ratio"]];
         for (let statusCode of statusCodes) {
             rangeValues.push([
                 statusCode.statusCode,

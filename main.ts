@@ -40,8 +40,8 @@ function loadData() {
     let filterSetCreatedOk = RTBApi.setupFilterSet(bidderId, accountId);
 
     if (filterSetCreatedOk) {
-        let impressionMetrics = RTBApi.fetchImpressionMetrics(bidderId, accountId).impressionMetricsRows[0];
-        let totalErrors = impressionMetrics.bidRequests.value - impressionMetrics.successfulResponses.value;
+        let impressionMetrics = RTBApi.fetchBidMetrics(bidderId, accountId).bidMetricsRows[0];
+        let totalErrors = impressionMetrics.bids.value - impressionMetrics.bidsInAuction.value;
 
         let filteredBids = RTBApi.fetchFilteredBids(bidderId, accountId).creativeStatusRows;
         let activeStatusCodes = filteredBids

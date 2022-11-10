@@ -23,7 +23,7 @@ namespace RTBApi {
         }
     };
 
-    export function setupFilterSet(bidderId: string, accountId: string) {
+    export function setupFilterSet(bidderId: string, accountId: string): boolean {
         let result = true;
         if (!filterSetExists(bidderId, accountId)) {
             result = createFilterSet(bidderId, accountId);
@@ -43,10 +43,14 @@ namespace RTBApi {
         return getImpressionsMetrics(getFilterSetName(bidderId, accountId));
     };
 
+    export function fetchBidMetrics(bidderId: string, accountId: string) {
+        return getBidMetrics(getFilterSetName(bidderId, accountId));
+    }
+
     export function fetchCreativeDetails(bidderId: string, creativeIds: Array<string>) {
         let creatives: Array<any> = [];
         while (creativeIds.length > 0) {
-            let currentCreatives = creativeIds.splice(0, 40);
+            let currentCreatives = creativeIds.splice(0, 15);
             let filter = encodeURIComponent(`creativeId=("${currentCreatives.join('" OR "')}")`);
             let response = UrlFetchApp.fetch(`https://realtimebidding.googleapis.com/v1/buyers/${bidderId}/creatives?filter=${filter}&pageSize=${currentCreatives.length}`, defaultOptions);
             if (response.getResponseCode() != 200) {
@@ -81,6 +85,16 @@ namespace RTBApi {
     function getImpressionsMetrics(filterSetName: string) {
         TrixLogger.log(`Getting total impression metrics from ${filterSetName}...`);
         let response = UrlFetchApp.fetch(`https://adexchangebuyer.googleapis.com/v2beta1/${filterSetName}/impressionMetrics`, defaultOptions);
+        if (response.getResponseCode() != 200) {
+            TrixLogger.log(`Error during last operation!`);
+            TrixLogger.log(response.getContentText());
+        }
+        return JSON.parse(response.getContentText());
+    };
+
+    function getBidMetrics(filterSetName: string) {
+        TrixLogger.log(`Getting total bid metrics from ${filterSetName}...`);
+        let response = UrlFetchApp.fetch(`https://adexchangebuyer.googleapis.com/v2beta1/${filterSetName}/bidMetrics`, defaultOptions);
         if (response.getResponseCode() != 200) {
             TrixLogger.log(`Error during last operation!`);
             TrixLogger.log(response.getContentText());
