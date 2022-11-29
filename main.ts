@@ -129,8 +129,8 @@ function loadData(bidderId: string, accountId: string) {
 }
 
 function loadAndMail() {
-    const bidderId = PropertiesService.getDocumentProperties().getProperty("bidderId")!;
-    const accountId = PropertiesService.getDocumentProperties().getProperty("accountId")!;
+    const bidderId = PropertiesService.getUserProperties().getProperty("bidderId")!;
+    const accountId = PropertiesService.getUserProperties().getProperty("accountId")!;
     loadData(bidderId, accountId);
     mailData();
 }
@@ -151,8 +151,8 @@ function scheduleRecurring() {
     const ui = SpreadsheetApp.getUi();
     const bidderId = SpreadsheetApp.getActiveSpreadsheet().getRangeByName(Config.configurations.parentId.range)!.getValue();
     const accountId = SpreadsheetApp.getActiveSpreadsheet().getRangeByName(Config.configurations.childId.range)!.getValue();
-    PropertiesService.getDocumentProperties().setProperty("bidderId", bidderId);
-    PropertiesService.getDocumentProperties().setProperty("accountId", accountId);
+    PropertiesService.getUserProperties().setProperty("bidderId", bidderId);
+    PropertiesService.getUserProperties().setProperty("accountId", accountId);
     removeTriggers();
     const durationDays = SpreadsheetApp.getActiveSpreadsheet().getRangeByName(Config.configurations.cadence.range)!.getValue();
     const response = ui.alert(`Scheduling email every ${durationDays} days for account ${bidderId}, is this correct?`, ui.ButtonSet.YES_NO);
